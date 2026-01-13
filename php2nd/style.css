@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+main{
+  width: 600px;
+  margin: 0 auto;
+}
+form{
+  background-color: #eee;
+  border:1px solid #ddd;
+}
+small{
+  font-size:0.8rem;
+  background-color: #9A1113;
+  color:#fff;
+  border-radius: 3px;
+  margin: 0 5px;
+}
+dl{
+  padding-top:10px;
+}
+dt{
+  clear: both;
+  float: left;
+  margin: 0 0 15px 0;
+  width: 220px;
+  text-align: right;
+}
+dd{
+  float: left;
+  margin: 0 0 15px 0;
+}
+input[type="email"]{
+  width: 250px;
+}
+input[type="radio"]{
+  padding-right: 20px;
+}
+textarea{
+  width: 250px;
+  height: 100px;
+}
+p:last-of-type{
+  text-align: center;
+}
+input[type="submit"]{
+  width: 300px;
+  padding: 10px;
+  color: #fff;
+  background-color: #0b4290;
+  border:1px solid #03192d;
+  cursor: pointer;
+}
