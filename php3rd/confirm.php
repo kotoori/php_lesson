@@ -6,6 +6,7 @@ $name = $_POST["name"];
 $email = $_POST["email"];
 $reemail = $_POST["reemail"];
 $gender = $_POST["gender"];
+$filename = "";
 $comment = $_POST["comment"];
 
 //セッションにユーザーが送信してきたデータを保存する
@@ -45,6 +46,27 @@ if($gender == 0){
 if(!filter_var($email,FILTER_VALIDATE_EMAIL,FILTER_FLAG_EMAIL_UNICODE)){
   //先頭に!を入れることで、結果を逆転させる（true→falseになり、falseだったらtrueになる）→メールアドレスが間違えているとtrueになる
   $error[] = 'メールアドレスの形式が正しくありません';
+}
+
+//画像ファイルのチェック
+if(isset($_FILES) && !empty($_FILES['image']) ){
+  //ファイルが送信させてきているので、処理する
+  if(($_FILES['image']['error']) == UPLOAD_ERR_OK){
+    $type = exif_imagetype($_FILES['image']['tmp_name']);
+    //画像の形式を取得する。$_FILES['image']['tmp_name']はPHPが勝手につけた一時ファイル名
+    if(($type == IMAGETYPE_JPEG) || ($type == IMAGETYPE_PNG)){
+      $filename = $_FILES['image']['name'];
+      $filename = uniqid().'_'.$filename;
+      move_uploaded_file($_FILES['image']['tmp_name'],'upload/'.$filename);
+    }else{
+      //画像がJPEGでもPNGでもない
+      $error[] = '画像ファイルの形式が正しくありません';
+    }
+  }else{
+    //ファイルのアップロードに失敗している
+    $error[] = '画像ファイルのアップロードに失敗しました';
+
+  }
 }
 
 if(count($error) > 0){//$errorの中身が空ではない
@@ -90,6 +112,10 @@ else{
       <p>性別
         <?php echo $gender; ?>
       </p>
+      <?php if(file_exists('upload/'.$filename)){
+        //file_exists()は引数で指定したファイルが存在するかどうかチェックする
+        echo '<p><img src="upload/'.$filename.'" alt="アップロードされた画像"></p>';
+      } ?>
       <p><label>コメント</label>
         <?php echo nl2br(eschtml($comment)); ?>
       </p>

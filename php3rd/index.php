@@ -43,6 +43,8 @@
           <input type="radio" name="gender" value="3" <?php if(empty($_SESSION['gender']) || $_SESSION['gender'] == 3){echo 'checked';}?>>その他
         </label>
       </dd>
+      <dt><label for="image">画像ファイル</label></dt>
+      <dd><input type="file" name="image" id="image"></dd>
       <dt><label>コメント</label></dt>
       <dd><textarea name="comment" placeholder="コメント内容"><?php if(!empty($_SESSION['comment'])){echo $_SESSION['comment'];}?></textarea></dd>
       <p><input type="submit" value="お問い合わせする"></p>
